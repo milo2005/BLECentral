@@ -1,0 +1,35 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:stretchColumns="0"
+    >
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        ></ListView>
+
+    <TableRow
+        android:background="@color/primary"
+        android:layout_gravity="center_vertical"
+        >
+        <TextView
+            android:id="@+id/txt_state"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/small"
+            android:textColor="@android:color/white"
+            android:text="@string/state_no_scan"
+
+            />
+        <Switch
+            android:id="@+id/state"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/small"
+            android:checked="false"
+            />
+    </TableRow>
+
+</TableLayout>

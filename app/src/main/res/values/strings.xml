@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Temperatura Scan</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_scan">Escanear</string>
+    <string name="state_no_scan">No escaneando</string>
+    <string name="state_scan">Escanenado</string>
+    <string name="scan_fail">Error al Escanear</string>
+    <string name="client_connected">Conectado con</string>
+</resources>
