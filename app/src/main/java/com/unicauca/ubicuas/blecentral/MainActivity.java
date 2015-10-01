@@ -1,6 +1,13 @@
 package com.unicauca.ubicuas.blecentral;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
+import android.bluetooth.le.BluetoothLeScanner;
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanFilter;
+import android.bluetooth.le.ScanResult;
+import android.bluetooth.le.ScanSettings;
 import android.os.Bundle;
 import android.os.ParcelUuid;
 import android.view.Menu;
@@ -12,6 +19,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener, View.OnClickListener {
@@ -23,6 +32,11 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     Switch state;
     TextView txtState;
     ListView list;
+
+    BluetoothManager manager;
+    BluetoothAdapter adapter;
+    BluetoothLeScanner scanner;
+    MyScanCallback callback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +50,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
         list = (ListView) findViewById(R.id.list);
         list.setOnItemClickListener(this);
+
+        manager = (BluetoothManager) getSystemService(BLUETOOTH_SERVICE);
+        adapter = manager.getAdapter();
+        scanner = adapter.getBluetoothLeScanner();
     }
 
 
@@ -52,4 +70,42 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
     }
     //endregion
+
+    public void startScan(){
+        ScanSettings settings = new ScanSettings.Builder().build();
+        List<ScanFilter> filters = new ArrayList<>();
+
+        ScanFilter filter = new ScanFilter.Builder()
+                .setServiceUuid(SERVICE_UUID)
+                .build();
+
+        filters.add(filter);
+
+        callback = new MyScanCallback();
+
+        scanner.startScan(filters,settings,callback);
+
+    }
+
+    public void stopScan(){
+        if(callback!=null){
+            scanner.stopScan(callback);
+            callback=null;
+        }
+    }
+
+    public class MyScanCallback extends ScanCallback{
+
+        @Override
+        public void onScanResult(int callbackType, ScanResult result) {
+            super.onScanResult(callbackType, result);
+        }
+
+        @Override
+        public void onScanFailed(int errorCode) {
+            super.onScanFailed(errorCode);
+        }
+    }
+
+
 }
